@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>Whitelist Ansökan</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+
+<img src="logo.png" class="logo">
+<h1>Whitelist Ansökan</h1>
+
+<form id="form">
+  <input name="discord" placeholder="Discord namn" required>
+  <input name="age" type="number" placeholder="Ålder" required>
+  <textarea name="reason" placeholder="Varför ska du bli whitelistad?" required></textarea>
+
+  <div class="g-recaptcha" data-sitekey="DIN_RECAPTCHA_SITE_KEY"></div>
+  <button>Skicka</button>
+</form>
+
+<script>
+const webhook = "DISCORD_WEBHOOK_URL";
+
+document.getElementById("form").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const ip = await fetch("https://api.ipify.org?format=json")
+    .then(r => r.json()).then(d => d.ip);
+
+  const f = e.target;
+
+  const embed = {
+    title: "📝 Whitelist Ansökan",
+    color: 3447003,
+    fields: [
+      { name: "Discord", value: f.discord.value, inline: true },
+      { name: "Ålder", value: f.age.value, inline: true },
+      { name: "Motivering", value: f.reason.value },
+      { name: "IP", value: ip, inline: true },
+      { name: "Tid", value: new Date().toLocaleString(), inline: true }
+    ]
+  };
+
+  await fetch(webhook, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ embeds: [embed] })
+  });
+
+  alert("Ansökan skickad!");
+  f.reset();
+});
+</script>
+
+</body>
+</html>
