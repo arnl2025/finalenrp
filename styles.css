@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #000000;
+  background: #000000; /* HELSVART */
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
   padding: 40px;
@@ -16,14 +16,14 @@ body {
   max-width: 140px;
 }
 
-/* TITLAR */
+/* RUBRIK */
 h1 {
   text-align: center;
   margin-bottom: 30px;
   font-weight: 600;
 }
 
-/* MENY (index.html) */
+/* MENY */
 .menu {
   max-width: 420px;
   margin: auto;
@@ -32,19 +32,20 @@ h1 {
 }
 
 .menu a {
-  background: #0f0f0f;
-  border: 1px solid #2a2a2a;
+  background: #0b0b0b;
+  border: 1px solid #1f1f1f;
   padding: 16px;
   text-align: center;
   border-radius: 10px;
   color: #ffffff;
   text-decoration: none;
-  transition: 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .menu a:hover {
   background: #ffffff;
   color: #000000;
+  transform: translateY(-2px) scale(1.02);
 }
 
 /* FORMULÄR */
@@ -54,7 +55,8 @@ form {
   background: #050505;
   padding: 28px;
   border-radius: 14px;
-  border: 1px solid #1f1f1f;
+  border: 1px solid #1a1a1a;
+  animation: fadeIn 0.4s ease;
 }
 
 /* INPUTS */
@@ -68,11 +70,13 @@ textarea {
   background: #000000;
   color: #ffffff;
   font-size: 14px;
+  transition: border 0.2s ease;
 }
 
-input::placeholder,
-textarea::placeholder {
-  color: #888;
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #ffffff;
 }
 
 textarea {
@@ -80,7 +84,7 @@ textarea {
   min-height: 100px;
 }
 
-/* KNAPP */
+/* SKICKA-KNAPP */
 button {
   margin-top: 20px;
   width: 100%;
@@ -92,16 +96,44 @@ button {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 button:hover {
   background: #000000;
   color: #ffffff;
   border: 1px solid #ffffff;
+  transform: translateY(-2px);
 }
 
-/* reCAPTCHA centrering */
+/* TILLBAKA-KNAPP */
+.back {
+  display: block;
+  max-width: 520px;
+  margin: 0 auto 20px;
+  color: #aaaaaa;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.back:hover {
+  color: #ffffff;
+}
+
+/* reCAPTCHA */
 .g-recaptcha {
   margin-top: 20px;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
