@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>Staff Ansökan</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+
+<img src="logo.png" class="logo">
+<h1>Staff Ansökan</h1>
+
+<form id="form">
+  <input name="discord" placeholder="Discord namn" required>
+  <textarea name="experience" placeholder="Tidigare staff-erfarenhet" required></textarea>
+  <textarea name="reason" placeholder="Varför vill du bli staff?" required></textarea>
+
+  <div class="g-recaptcha" data-sitekey="RECAPTCHA_SITE_KEY"></div>
+  <button>Skicka</button>
+</form>
+
+<script>
+const webhook = "WEBHOOK_URL";
+
+document.getElementById("form").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const ip = await fetch("https://api.ipify.org?format=json")
+    .then(r => r.json()).then(d => d.ip);
+
+  const f = e.target;
+
+  const embed = {
+    title: "🛡️ Staff Ansökan",
+    color: 5793266,
+    fields: [
+      { name: "Discord", value: f.discord.value },
+      { name: "Erfarenhet", value: f.experience.value },
+      { name: "Motivering", value: f.reason.value },
+      { name: "IP", value: ip, inline: true },
+      { name: "Tid", value: new Date().toLocaleString(), inline: true }
+    ]
+  };
+
+  await fetch(webhook, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ embeds: [embed] })
+  });
+
+  alert("Staff-ansökan skickad!");
+  f.reset();
+});
+</script>
+
+</body>
+</html>
